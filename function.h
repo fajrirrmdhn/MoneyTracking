@@ -18,6 +18,12 @@ void tampilanAwal(){
     cout << "===============================" << endl;
 }
 
+void hitungSaldo(int saldo){
+    ofstream dataFile;
+    dataFile.open("saldo.txt");
+    dataFile << saldo;
+}
+
 void simpanKeFile(string jenis, int jumlah, string kategori = ""){
     ofstream dataFile;
     dataFile.open("database.txt", ios::app);
@@ -37,11 +43,18 @@ void pemasukanSaldo(){
 
     saldo += masuk;
     simpanKeFile("Pemasukan", masuk); 
+    hitungSaldo(masuk);
     cout << endl;
 }
 
 void pengeluaranSaldo(){
     int keluar;
+    ifstream dataFile;
+    
+    dataFile.open("saldo.txt");
+    dataFile >> saldo;
+    dataFile.close();
+
     cout << "Masukkan Jumlah Pengeluaran: ";
     cin >> keluar;
 
@@ -49,14 +62,24 @@ void pengeluaranSaldo(){
     cin.ignore(); 
     getline(cin, kategori); 
     
+
     saldo -= keluar;
     simpanKeFile("Pengeluaran", keluar, kategori);
     cout << endl;
+    hitungSaldo(saldo -= keluar);
 }
 
 void cekSaldo(){
+    ifstream dataFile;
+    string saldo;
+
+    dataFile.open("saldo.txt");
+
+    getline(dataFile, saldo);
     cout << "Saldo Anda Saat Ini: " << saldo << endl;
     cout << endl;
+
+    dataFile.close();
 }
 
 void riwayatTransaksi(){
@@ -67,8 +90,6 @@ void riwayatTransaksi(){
     dataFile.open("database.txt");
     
     getline(dataFile, data);
-    // data.append("\n" + data);
-    // cout << data << endl;
     while(!dataFile.eof()){
         dataFile >> nama;
         cout << nama << " " << endl;
