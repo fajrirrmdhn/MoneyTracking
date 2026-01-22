@@ -13,6 +13,8 @@ int main(){
     cout << "Masukkan Pilihan Anda: ";
     cin >> pilihan;
     cout << endl;
+    
+    int saldo = cekSaldo();
 
     switch(pilihan) {
         case 1:
@@ -22,7 +24,7 @@ int main(){
             pengeluaranSaldo();
             break;
         case 3:
-            cekSaldo();
+            cout << "Saldo Anda Saat Ini : " << saldo << endl;
             break;
         case 4:
             riwayatTransaksi();

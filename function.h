@@ -3,7 +3,6 @@
 #include <fstream>
 using namespace std;
 
-string kategori;
 void tampilanAwal(){
     cout << "===============================" << endl;
     cout << "     APLIKASI PELACAK UANG     " << endl;
@@ -17,13 +16,39 @@ void tampilanAwal(){
     cout << "===============================" << endl;
 }
 
-void hitungSaldo(int saldo){
-    int saldoSaatIni = 0;
+int cekSaldo(){
+    ifstream dataFile;
+    int saldo = 0;
+
+    dataFile.open("saldo.txt");
+    dataFile >> saldo;
+    dataFile.close();
+
+    return saldo;
+}
+
+int hitungSaldoMasuk(int saldoMasuk){
+    int saldoSaatIni = cekSaldo();
+    saldoSaatIni += saldoMasuk;
+
     ofstream dataFile;
     dataFile.open("saldo.txt");
     dataFile << saldoSaatIni;
-    saldoSaatIni += saldo;
-    cout << saldoSaatIni << endl;
+    dataFile.close();
+    
+    return saldoSaatIni;
+}
+
+int hitungSaldoKeluar(int saldoKeluar){
+    int saldoSaatIni = cekSaldo();
+    saldoSaatIni -= saldoKeluar;
+
+    ofstream dataFile;
+    dataFile.open("saldo.txt");
+    dataFile << saldoSaatIni;
+    dataFile.close();
+    
+    return saldoSaatIni;
 }
 
 void simpanKeDatabase(string jenis, int jumlah, string kategori = ""){
@@ -46,13 +71,14 @@ void pemasukanSaldo(){
     cin >> masuk;
 
     simpanKeDatabase("Pemasukan", masuk); 
-    hitungSaldo(masuk);
+    hitungSaldoMasuk(masuk);
     cout << endl;
 }
 
 void pengeluaranSaldo(){
     int saldo;
     int keluar;
+    string kategori;
     ifstream dataFile;
     
     dataFile.open("saldo.txt");
@@ -69,21 +95,7 @@ void pengeluaranSaldo(){
     
     simpanKeDatabase("Pengeluaran", keluar, kategori);
     cout << endl;
-    hitungSaldo(saldo -= keluar);
-}
-
-void cekSaldo(){
-    ifstream dataFile;
-    string saldo;
-
-    dataFile.open("saldo.txt");
-
-    getline(dataFile, saldo);
-    cout << "===============================" << endl;
-    cout << "Saldo Anda Saat Ini: " << saldo << endl;
-    cout << endl;
-
-    dataFile.close();
+    hitungSaldoKeluar(keluar);
 }
 
 void riwayatTransaksi(){
