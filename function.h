@@ -16,6 +16,52 @@ void tampilanAwal(){
     cout << "===============================" << endl;
 }
 
+int cekArusKasMasuk(){
+    ifstream dataFile;
+    int arus = 0;
+
+    dataFile.open("aruskasmasuk.txt");
+    dataFile >> arus;
+    dataFile.close();
+
+    return arus;
+}
+
+int arusKasMasuk(int arusKasMasuk){
+    int arusMasuk = cekArusKasMasuk();
+    arusMasuk += arusKasMasuk;
+
+    ofstream dataFile;
+    dataFile.open("aruskasmasuk.txt");
+    dataFile << arusKasMasuk;
+    dataFile.close();
+
+    return arusMasuk;
+}
+
+int cekArusKasKeluar(){
+    ifstream dataFile;
+    int arus = 0;
+
+    dataFile.open("aruskaskeluar.txt");
+    dataFile >> arus;
+    dataFile.close();
+
+    return arus;
+}
+
+int arusKasKeluar(int arusKasKeluar){
+    int arusKeluar = cekArusKasKeluar();
+    arusKeluar += arusKasKeluar;
+
+    ofstream dataFile;
+    dataFile.open("aruskaskeluar.txt");
+    dataFile << arusKasKeluar;
+    dataFile.close();
+
+    return arusKeluar;
+}
+
 int cekSaldo(){
     ifstream dataFile;
     int saldo = 0;
@@ -72,6 +118,7 @@ void pemasukanSaldo(){
 
     simpanKeDatabase("Pemasukan", masuk); 
     hitungSaldoMasuk(masuk);
+    arusKasMasuk(masuk);
     cout << endl;
 }
 
@@ -96,6 +143,7 @@ void pengeluaranSaldo(){
     simpanKeDatabase("Pengeluaran", keluar, kategori);
     cout << endl;
     hitungSaldoKeluar(keluar);
+    arusKasKeluar(keluar);
 }
 
 void riwayatTransaksi(){
@@ -114,4 +162,27 @@ void riwayatTransaksi(){
     getline(dataFile, nama);
     }
     dataFile.close();
-} 
+}
+
+int nilaiArusKasMasuk(){
+    ifstream dataFile;
+    int arusKasMasuk = 0;
+
+    dataFile.open("aruskasmasuk.txt");
+    dataFile >> arusKasMasuk;
+    dataFile.close();
+
+    return arusKasMasuk;
+
+}
+
+int nilaiArusKasKeluar(){
+    ifstream dataFile;
+    int arusKasKeluar = 0;
+
+    dataFile.open("aruskaskeluar.txt");
+    dataFile >> arusKasKeluar;
+    dataFile.close();
+
+    return arusKasKeluar;
+}

@@ -15,6 +15,9 @@ int main(){
     cout << endl;
     
     int saldo = cekSaldo();
+    int arusKasMasuk = nilaiArusKasMasuk();
+    int arusKasKeluar = nilaiArusKasKeluar();
+    int arusKas = arusKasMasuk - arusKasKeluar;
 
     switch(pilihan) {
         case 1:
@@ -24,16 +27,22 @@ int main(){
             pengeluaranSaldo();
             break;
         case 3:
+            cout << "===============================" << endl;
             cout << "Saldo Anda Saat Ini : " << saldo << endl;
             break;
         case 4:
             riwayatTransaksi();
             break;
         case 5:
+            cout << "===============================" << endl;
+            cout << "Pemasukan: " << arusKasMasuk << endl;
+            cout << "Pengeluaran: " << arusKasKeluar << endl;
+            cout << "Arus Kas: " << arusKas << endl;
             break;
         case 6:
             break;
         default:
+        cout << "===============================" << endl;
         cout << "Anda belum memilih" << endl;
         }
     }while(pilihan != 6);
